@@ -1,0 +1,1 @@
+1. This folder contain a script with a data wrangling function created by Leonardo Brait for merging anotation and metadata with environmental classification. 
