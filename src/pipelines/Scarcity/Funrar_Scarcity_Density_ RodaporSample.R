@@ -27,50 +27,25 @@
 
 ## 8. Save the results and export to excel
 
-
-
-
-
 ############################# 1. Load the library ##############################
 
 # Library
-
 library(Matrix)
-
 library(tidyverse)
-
 library(funrar)
-
-
 ############################# 2. Load the data #################################
 
 #Load data frame
-
-df <- read_csv("genero_taxonomia_samples_resistoma.csv")
-
-
-
+df <- read_csv("input/tabela_taxonomia_funrar_final_relative_2022_11_14.csv")
 #Check number of rows and columns
-
 dim(df)
-
-
-
 #check data structure
-
 str(df)
-
-
-
 #Check the character variables
 
-df %>%
-  
-  select_if(is.character) %>%
-  
+df %>% 
+  select_if(is.character) %>% 
   str()
-
-
 
 ############################# 3. Data preprocessing ############################
 
@@ -87,31 +62,20 @@ df %>%
 # scarcity plot.
 
 df <- df %>%
-  
   rename(
-    
-    life_form = level_1,
-    
+    life_form = level_1, 
     environment = level_2,
-    
     habitat = level_3
-    
   )
 
 
 
 # Create the df with the samples names.
-
 df_char <- df %>%
-  
   select(
-    
-    samples,
-    
-    life_form,
-    
-    environment,
-    
+    samples, 
+    life_form, 
+    environment,  
     habitat
     
   )
@@ -128,71 +92,45 @@ df_char <- df %>%
 
 df_clean <- df %>%
   
-  select(
-    
+  select( 
     -habitat,
-    
     -life_form,
-    
     -environment,
     
   )
 
-
-
 # Check the data structure of the character variables in df_clean
 
 df_clean %>%
-  
-  select_if(is.character) %>%
-  
+  select_if(is.character) %>% 
   str()
 
 
 # Let's separate the numeric variables from the character variables in order to
-
 # construct the matrix.
-
 df_clean_numeric <- df_clean %>%
-  
   select_if(is.numeric)
 
-
-
 df_clean_character <- df_clean %>%
-  
   select_if(is.character)
-
-
 
 ############################# 4. Create the matrix #############################
 
 # Lets create our matrix using numeric variables
-
 df_matrix <- as.matrix(df_clean_numeric)
 
-
-
 # Now we are going to set the rownames of our matrix based on the character
-
 # variables.
 
 rownames(df_matrix) <- paste0(df_clean_character$samples)
 
-
-
 ## Our matrix was created. Let's clear the global environment to free up memory.
 
 rm(list = setdiff(
-  
   ls(),
-  
-  c("df_matrix",
-    
+  c("df_matrix",   
     "df_char")
-  
 ))
-
 
 
 ############################# 5. Check the matrix ##############################
@@ -207,13 +145,8 @@ rm(list = setdiff(
 
 df_filling <- 1 - sum(df_matrix == 0) / (ncol(df_matrix) * nrow(df_matrix))
 
-
-
-## The filling percentage is 0.1%
-
 df_filling # Our results shows that we have  46% of the cells filled with
 
-# 0 values. Need to use sparse matrixes.
 
 
 
@@ -239,52 +172,41 @@ print(object.size(sparse_mat), units = "Kb") # Sparse matrix 102 Mb
 # First we need to calculate the distance matrix.
 
 df_stack <- matrix_to_stack(
-  
-  df_matrix,
-  
-  "value",
-  
+  df_matrix, 
+  "value", 
   "samples",
-  
   "species"
-  
 )
 
-
-
-
-
 # check the data structure of the stack
-
 str(df_stack)
-
-
 
 # Compute scarcity for each species on each habitat
 
-si_df <- scarcity_stack(
-  
+si_df <- scarcity_stack(  
   df_stack,
-  
   "species",
-  
   "samples",
-  
-  "value"
-  
+  "value"  
 )
 
-
-
 head(si_df)
-
-
 
 # Check NA values in si_df
 
 si_df %>%
   
-  filter(value == is.na)
+  filter(is.na(value))
+
+si_df <- si_df[,-3]
+#turning si_df to a wide format
+si_df_wide <- si_df %>%
+  pivot_wider(
+    id_cols = samples,
+    names_from = species,
+    values_from = Si
+  )
+
 
 
 # Density of scarcity values total graphic
