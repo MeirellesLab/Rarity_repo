@@ -83,20 +83,14 @@ df_char <- df %>%
 
 
 ## The way that funrar works is that it is based on matrixes. These matrixes
-
 ## only accept one character variable. So we need to choose the site level to be
-
-## used. Here, I will use at habitat level. Later we will need to build a new
-
-## data frame with the other levels (life_form and environment)
+## used. Here, I will use at sample level. 
 
 df_clean <- df %>%
-  
   select( 
     -habitat,
     -life_form,
     -environment,
-    
   )
 
 # Check the data structure of the character variables in df_clean
@@ -199,19 +193,12 @@ si_df %>%
   filter(is.na(value))
 
 si_df <- si_df[,-3]
-#turning si_df to a wide format
-si_df_wide <- si_df %>%
-  pivot_wider(
-    id_cols = samples,
-    names_from = species,
-    values_from = Si
-  )
+
+
 
 
 
 # Density of scarcity values total graphic
-
-
 
 quant <- quantile(si_df$Si, probs = seq(0, 1))
 
