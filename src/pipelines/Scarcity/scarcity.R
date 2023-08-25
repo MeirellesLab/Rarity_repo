@@ -82,3 +82,7 @@ rm(list = setdiff(
 ####### Run Scarcity function #############
 
 si_df <- scarcity(df_matrix)
+
+si_df <- as.data.frame(si_df)
+
+
