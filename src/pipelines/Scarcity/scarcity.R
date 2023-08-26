@@ -73,16 +73,43 @@ rownames(df_matrix) <- paste0(df_clean_character$samples)
 
 ## Our matrix was created. Let's clear the global environment to free up memory.
 
+df_filling <- 1 - sum(df_matrix == 0) / (ncol(df_matrix) * nrow(df_matrix))
+
+df_filling
+
 rm(list = setdiff(
   ls(),
   c("df_matrix",   
     "df_char")
 ))
 
+sum(is.na(df_matrix))
+
+sum(df_matrix == 0)
+#sum of non zero values for each row:
+rich_persample <- rowSums(df_matrix != 0)
+ 
 ####### Run Scarcity function #############
 
 si_df <- scarcity(df_matrix)
 
+#check if si_df have NA values
+sum(is.na(si_df))
+
+si_means <- rowMeans(si_df, na.rm = TRUE) #taking mean si for each sample
+
+#convert to a dataframe creating a column named samples with the row names
 si_df <- as.data.frame(si_df)
 
 
+#creating a samples column with the row names
+si_df$samples <- rownames(si_df)  
+#putting the samples column in the first 
+si_df <- si_df[, c(ncol(si_df), 1:(ncol(si_df)-1))]
+
+#Put the means in the dataframe
+si_df <- cbind(si_df[, 1, drop = F], mean_si = si_means, si_df[, -1])
+
+#Put the richness in the dataframe
+si_df <- cbind(si_df[, 1:2, drop = F], richness = rich_persample, si_df[, -c(1:3)])
+position
