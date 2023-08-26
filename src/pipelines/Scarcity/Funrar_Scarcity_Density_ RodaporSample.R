@@ -36,7 +36,7 @@ library(funrar)
 ############################# 2. Load the data #################################
 
 #Load data frame
-df <- read_csv("input/tabela_taxonomia_funrar_final_relative_2022_11_14.csv")
+df <- read_csv("input/genus.general.relative.matrix.csv")
 #Check number of rows and columns
 dim(df)
 #check data structure
