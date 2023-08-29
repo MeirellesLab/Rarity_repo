@@ -10,24 +10,36 @@ si <- read_csv("input/scarcity_means_persample_29_08_2023.csv")
 
 #life_style summarized si means
 si_life_style <- si %>%
-  group_by(life_style) %>%
-  summarise(mean_si = mean(mean_si, na.rm = TRUE),
-            mean_richness = mean(richness, na.rm = TRUE),
-            mean_diversity = mean(diversity, na.rm = TRUE))
+      group_by(life_style) %>%
+      dplyr::summarise(
+        n = dplyr::n(),
+        median_mean_si = median(mean_si),
+        mean_mean_si = mean(mean_si),
+        sd_mean_si = sd(mean_si),
+        se_mean_si = sd_mean_si / sqrt(n)) %>%
+      select(-n)
 
 
-#ecosystem summarized si means
-si_ecosystem <- si %>%
-  group_by(ecosystem) %>%
-  summarise(mean_si = mean(mean_si, na.rm = TRUE),
-            mean_richness = mean(richness, na.rm = TRUE),
-            mean_diversity = mean(diversity, na.rm = TRUE))
+#ecosystem summarized si means and 
+si_ecosystem <- si  %>%
+      group_by(life_style, ecosystem) %>%
+      dplyr::summarise(
+        n = dplyr::n(),
+        median_mean_si = median(mean_si),
+        mean_mean_si = mean(mean_si),
+        sd_mean_si = sd(mean_si),
+        se_mean_si = sd_mean_si / sqrt(n)) %>%
+      select(-n)
 
 
 #habitat summarized si means
-si_habitat <- si %>%
-  group_by(habitat) %>%
-  summarise(mean_si = mean(mean_si, na.rm = TRUE),
-            mean_richness = mean(richness, na.rm = TRUE),
-            mean_diversity = mean(diversity, na.rm = TRUE))
+si_ecosystem <- si  %>%
+      group_by(life_style, habitat, ecosystem) %>%
+      dplyr::summarise(
+        n = dplyr::n(),
+        median_mean_si = median(mean_si),
+        mean_mean_si = mean(mean_si),
+        sd_mean_si = sd(mean_si),
+        se_mean_si = sd_mean_si / sqrt(n)) %>%
+      select(-n)
 
