@@ -8,6 +8,37 @@
 # load si_means_persample table
 si <- read_csv("input/scarcity_means_persample_29_08_2023.csv")
 
+## There is something very strange with this function. But it was the only way
+## I found to reorder the DF based in the life style, ecosystem, then the mean,
+## nested in this order.
+si <- si %>%
+
+  group_by(life_style) %>%
+  mutate(life_style = fct_relevel(life_style, "host-associated", "free-living")) %>%
+  ungroup() %>%
+
+  group_by(ecosystem) %>%
+  mutate(mean = mean(mean_si)) %>%
+  ungroup() %>%
+  mutate(ecosystem = fct_reorder(ecosystem, mean)) %>%
+
+#   group_by(life_style) %>%
+#   mutate(ecosystem = fct_reorder(ecosystem, mean)) %>%
+#   select(-mean) %>%
+#   ungroup() %>%
+
+  group_by(ecosystem, habitat) %>%
+  mutate(mean = mean(mean_si)) %>%
+  ungroup() %>%
+
+  group_by(ecosystem) %>%
+  mutate(habitat = fct_reorder(habitat, mean)) %>%
+  select(-mean)
+
+si$life_style <- as.factor(si$life_style)
+si$ecosystem <- as.factor(si$ecosystem)
+si$habitat <- as.factor(si$habitat)
+
 #life_style summarized si means
 si_life_style <- si %>%
       group_by(life_style) %>%

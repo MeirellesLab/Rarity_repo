@@ -12,8 +12,10 @@ dual_pallete <- c(
   "free_living" = "#00b2ef")
 pallete <- dual_pallete
 
+axis_text_angle = 45
+
 eco_colors <- c(
-  "human_host-asociated" = "#DA70D6",
+  "human_host-associated" = "#DA70D6",
   "animal_host-associated" = "#FFD700",
   "plant_associated" = "#228B22",
   "groundwater" = "#3A5FCD",
@@ -34,3 +36,4 @@ ecosystem_plot <- bar_plot(
     error_var = "se_mean_si",
     fill_pallete = eco_colors
 )
+ecosystem_plot
