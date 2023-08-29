@@ -1,6 +1,8 @@
-library(tidyverse)
+#########################################################################################################
+# Description: This script contains the code to generate the plots for the project.                    ##                         
+# Need to source dw_index_tables.                                                                                                      ##
+#########################################################################################################
 
-scarcity <- read_csv("input/scarcity_index-taxon.csv")
-View(scarcity)
+source("src/data_wrangling/dw_index_tables.R")
 
 
