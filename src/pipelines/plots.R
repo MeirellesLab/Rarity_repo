@@ -67,6 +67,8 @@ si_diversity_plot <- ggplot(si, aes(x = mean_si, y = diversity)) +
   theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
 si_diversity_plot
 
+ggsave("results/plots/si_x_diversity_plot.png", width = 10, height = 10, units = "in")
+
 #mean_si versus richness regression plot
 si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
   geom_point() +
@@ -75,3 +77,5 @@ si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
 si_richness_plot
+
+ggsave("results/plots/si_x_richness_plot.png", width = 10, height = 10, units = "in")
