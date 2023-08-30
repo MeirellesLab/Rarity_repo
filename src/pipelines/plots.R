@@ -26,6 +26,10 @@ eco_colors <- c(
   "soil" = "#8B4513"
 )
 
+
+
+
+
 ecosystem_plot <- bar_plot(
     data = si,
     x_var = "ecosystem",
