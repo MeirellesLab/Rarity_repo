@@ -57,3 +57,21 @@ life_style_plot <- bar_plot(
 life_style_plot
 
 ggsave("results/plots/life_style_plot.png", width = 10, height = 15, units = "in")
+
+#mean_si versus diversity regression plot
+si_diversity_plot <- ggplot(si, aes(x = mean_si, y = diversity)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Mean Scarcity", y = "Diversity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
+si_diversity_plot
+
+#mean_si versus richness regression plot
+si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Mean Scarcity", y = "Richness") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
+si_richness_plot
