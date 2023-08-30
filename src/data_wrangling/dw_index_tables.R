@@ -4,6 +4,7 @@
 # of all taxons were calculated for each sample. The si_means_persample table has the mean si values  ##
 # of each sample, the richness and the diversity of each sample.                                      ##
 ########################################################################################################
+set.seed(123)
 
 # load si_means_persample table
 si <- read_csv("input/scarcity_means_persample_29_08_2023.csv")
