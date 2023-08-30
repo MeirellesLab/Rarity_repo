@@ -38,3 +38,5 @@ ecosystem_plot <- bar_plot(
     fill_pallete = eco_colors
 )
 ecosystem_plot
+
+ggsave("results/plots/ecosystem_plot.png", width = 15, height = 10, units = "in")
