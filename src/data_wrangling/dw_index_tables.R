@@ -52,7 +52,7 @@ si_life_style <- si %>%
       select(-n) 
 
 
-#ecosystem summarized si means and 
+#ecosystem summarized si means
 si_ecosystem <- si  %>%
       group_by(life_style, ecosystem) %>%
       dplyr::summarise(
@@ -63,8 +63,16 @@ si_ecosystem <- si  %>%
         se_mean_si = sd_mean_si / sqrt(n)) %>%
       select(-n)
 
-eco_order <- si_ecosystem$ecosystem %>% factor(si_ecosystem$ecosystem, levels = si_ecosystem$ecosystem[order(si_ecosystem$mean_mean_si)])
-
+#order ecosystem factor in ascending order 
+si_ecosystem$ecosystem <- factor(si_ecosystem$ecosystem, levels = c("sediment",                                                                                                                                      
+                                                                  "freshwater",
+                                                                  "wastewater", 
+                                                                  "soil",
+                                                                  "plant_associated",                                                        
+                                                                  "groundwater",
+                                                                  "saline_water",
+                                                                  "animal_host-associated",
+                                                                  "human_host-associated"))
 
 
 #habitat summarized si means

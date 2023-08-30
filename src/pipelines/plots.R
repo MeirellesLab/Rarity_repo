@@ -27,9 +27,6 @@ eco_colors <- c(
 )
 
 
-
-
-
 ecosystem_plot <- bar_plot(
     data = si,
     x_var = "ecosystem",
