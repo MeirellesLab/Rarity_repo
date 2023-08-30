@@ -5,30 +5,11 @@ packages <- c(
   "funrar", 
   "ggplot2",
   "dplyr",
-  "tidyr",
-  "readr",
-  "Hmisc",
-  "plyr",
   "RColorBrewer",
-  "reshape2",
-  "ggforce",
-  "forcats",
-  "extrafont",
   "ggpubr",
-  "patchwork",
-  "gridExtra",
   "cowplot",
-  "PupillometryR",
-  "ggthemes",
-  "plotly",
-  "stringr",
-  "ggpmisc",
   "vegan",
-  "factoextra",
-  "roxygen2",
-  "hillR",
-  "devtools",
-  "reticulate"
+  "devtools"
 )
 
 
@@ -39,6 +20,6 @@ for (lib in seq_along(packages)) {
   }
 }
 
-install.packages("funrar")
+#install.packages("funrar")
 
 lapply(packages, require, character.only = TRUE)
