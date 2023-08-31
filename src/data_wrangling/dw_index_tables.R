@@ -38,8 +38,28 @@ si <- si %>%
   select(-mean)
 
 si$life_style <- as.factor(si$life_style)
-si$ecosystem <- as.factor(si$ecosystem)
 si$habitat <- as.factor(si$habitat)
+
+si <- si %>% 
+      mutate(
+            ecosystem = case_when(
+            ecosystem== "human_host-associated" ~ "Human host",
+            ecosystem == "animal_host-associated" ~ "Animal host",
+            ecosystem == "plant_associated" ~ "Plant host",
+            ecosystem == "groundwater" ~ "Groundwater",
+            ecosystem == "freshwater" ~ "Freshwater",
+            ecosystem == "wastewater" ~ "Wastewater",
+            ecosystem == "saline_water" ~ "Saline Water",
+            ecosystem == "sediment" ~ "Sediment",
+            ecosystem == "soil" ~ "Soil"))
+si <- si %>% 
+      mutate(
+            life_style = case_when(
+              life_style == "host-associated" ~ "Host associated",
+              life_style == "free-living" ~ "Free living"
+            ))
+
+si$ecosystem <- as.factor(si$ecosystem)
 
 #life_style summarized si means
 si_life_style <- si %>%

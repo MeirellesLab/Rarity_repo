@@ -8,34 +8,34 @@ source("src/pipelines/plot_functions/draw_barplot.R")
 
 #Colors
 dual_pallete <- c(
-  "host-associated" = "#ffd700",
-  "free-living" = "#00b2ef")
+  "Host associated" = "#ffd700",
+  "Free living" = "#00b2ef")
 pallete <- dual_pallete
 
 axis_text_angle = 45
 
 eco_colors <- c(
-  "human_host-associated" = "#DA70D6",
-  "animal_host-associated" = "#FFD700",
-  "plant_associated" = "#228B22",
-  "groundwater" = "#3A5FCD",
-  "freshwater" = "#87CEFA",
-  "wastewater" = "#000000",
-  "saline_water" = "#20B2AA",
-  "sediment" = "#F4A460",
-  "soil" = "#8B4513"
+  "Human host" = "#DA70D6",
+  "Animal host" = "#FFD700",
+  "Plant host" = "#228B22",
+  "Groundwater" = "#3A5FCD",
+  "Freshwater" = "#87CEFA",
+  "Wastewater" = "#000000",
+  "Saline Water" = "#20B2AA",
+  "Sediment" = "#F4A460",
+  "Soil" = "#8B4513"
 )
 
 #order ecosystem factor in ascending order 
-si_ecosystem$ecosystem <- factor(si_ecosystem$ecosystem, levels = c("plant_associated",
-                                                                  "wastewater",
-                                                                  "soil",
-                                                                  "sediment", 
-                                                                  "freshwater", 
-                                                                  "groundwater",
-                                                                  "saline_water",
-                                                                  "human_host-associated",
-                                                                  "animal_host-associated"))
+si_ecosystem$ecosystem <- factor(si_ecosystem$ecosystem, levels = c("Plant host",
+                                                                  "Wastewater",
+                                                                  "Soil",
+                                                                  "Sediment", 
+                                                                  "Freshwater", 
+                                                                  "Groundwater",
+                                                                  "Saline Water",
+                                                                  "Human host",
+                                                                  "Animal host"))
 
 
 ecosystem_plot <- bar_plot(
@@ -81,7 +81,7 @@ si_diversity_plot <- ggplot(si, aes(x = mean_si, y = diversity)) +
   scale_color_manual(values = pallete)
 si_diversity_plot
 
-ggsave("results/plots/si_x_diversity_plot.png", width = 10, height = 10, units = "in")
+ggsave("results/plots/mean-si_x_diversity_plot.png", width = 10, height = 10, units = "in")
 
 #mean_si versus richness regression plot
 si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
@@ -97,4 +97,82 @@ si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
   scale_color_manual(values = pallete)
 si_richness_plot
 
-ggsave("results/plots/si_x_richness_plot.png", width = 10, height = 10, units = "in")
+ggsave("results/plots/mean-si_x_richness_plot.png", width = 10, height = 10, units = "in")
+
+
+### Tryinng boxplot instead of barplot for ecosystem and life_style plots
+eco_boxplot <- ggplot() +
+  geom_boxplot(
+    data = si,
+    aes(
+      x = reorder(ecosystem, mean_si, median),
+      y = mean_si,
+      fill = ecosystem
+    ),
+    width = 0.5
+  ) +
+  theme_pubr() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_blank()) +
+  theme(axis.line = element_line()) +
+  #axist title and text
+  theme(
+    axis.text.y = element_text(size = unit(9, "cm")),
+    axis.text.x = element_text(
+      size = unit(12, "cm"),
+      angle = 45,
+      vjust = 0.6)) +
+  scale_fill_manual(values = eco_colors) +
+  labs(y = "Mean Scarcity", x = "Ecosystem") +
+  theme(
+    axis.title.x = element_text(
+    size = unit(15, "cm"),
+    face = "bold"),
+    axis.title.y = element_text(
+    size = unit(15, "cm"),
+    face = "bold")) +
+  theme(legend.position = "none")
+eco_boxplot
+
+ggsave("results/plots/ecosystem_boxplot.png", width = 10, height = 12, units = "in")
+
+lfst_boxplot <- ggplot() +
+  geom_boxplot(
+    data = si,
+    aes(
+      x = reorder(life_style, mean_si, median),
+      y = mean_si,
+      fill = life_style
+    ),
+    width = 0.5
+  ) +
+  theme_pubr() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_blank()) +
+  theme(axis.line = element_line()) +
+  #axist title and text
+  theme(
+    axis.text.y = element_text(size = unit(9, "cm")),
+    axis.text.x = element_text(
+      size = unit(12, "cm"),
+      angle = 45,
+      vjust = 0.6)) +
+  scale_fill_manual(values = pallete) +
+  labs(y = "Mean Scarcity", x = "Life Style") +
+  theme(
+    axis.title.x = element_text(
+    size = unit(15, "cm"),
+    face = "bold"),
+    axis.title.y = element_text(
+    size = unit(15, "cm"),
+    face = "bold")) +
+  theme(legend.position = "none")
+lfst_boxplot
+
+ggsave("results/plots/life-style_boxplot.png", width = 10, height = 12, units = "in")
