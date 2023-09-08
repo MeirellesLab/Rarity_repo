@@ -9,7 +9,8 @@ packages <- c(
   "ggpubr",
   "cowplot",
   "vegan",
-  "devtools"
+  "devtools",
+  "FD"
 )
 
 
@@ -23,3 +24,4 @@ for (lib in seq_along(packages)) {
 #install.packages("funrar")
 
 lapply(packages, require, character.only = TRUE)
+ 
