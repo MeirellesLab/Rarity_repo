@@ -43,7 +43,7 @@ fd <- dbFD(traits, taxon)
 #Generating distance matrix with traits
 dist_traits <-compute_dist_matrix(traits, method = "gower")
 
-# Calculate distinctiveness
+# Calculate distinctiveness  
 di_df <- distinctiveness(taxon, traits)
 
 di_df_stack <- matrix_to_stack(di_df,
