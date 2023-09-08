@@ -42,7 +42,7 @@ traits <- as.matrix(traits)
 dist_traits <-compute_dist_matrix(traits, metric = "euclidean")
 
 #calculating functional diversity per samples
-fd <- dbFD(traits, taxon)
+fd <- dbFD(dist_traits, taxon)
 
 
 # Calculate distinctiveness  
