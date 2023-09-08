@@ -37,11 +37,13 @@ traits <- traits %>%
 rownames(traits) <- genus_in_traits
 
 traits <- as.matrix(traits)
+ 
+#Generating distance matrix with traits
+dist_traits <-compute_dist_matrix(traits, metric = "euclidean")
+
 #calculating functional diversity per samples
 fd <- dbFD(traits, taxon)
 
-#Generating distance matrix with traits
-dist_traits <-compute_dist_matrix(traits, method = "gower")
 
 # Calculate distinctiveness  
 di_df <- distinctiveness(taxon, traits)
