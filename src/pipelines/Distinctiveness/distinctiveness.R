@@ -1,4 +1,4 @@
-########################################################################################
+#######################################################################################
 # This script calculates Distinctiveness for each genus in each sample in the database,#
 # then calculates the mean and standard error of Distinctiveness for each sample,      #
 # habitat, ecosystem and lifestyle.                                                             #
@@ -39,7 +39,7 @@ rownames(traits) <- genus_in_traits
 traits <- as.matrix(traits)
  
 #Generating distance matrix with traits
-dist_traits <-compute_dist_matrix(traits, metric = "euclidean")
+dist_traits <-compute_dist_matrix(traits, metric = "euclidean", type = "numeric")
 
 #calculating functional diversity per samples
 
