@@ -92,9 +92,6 @@ is.numeric(df_matrix)
 #sum of non zero values for each row (richness per sample):
 rich_persample <- rowSums(df_matrix != 0)
 
-#diversity per sample
-div_persample <- diversity(df_matrix, index = "simpson")
-
 
 ####### Run Scarcity function #############
 
@@ -118,11 +115,20 @@ si_sample_means <- si_stack %>%
 
 nrow(si_sample_means)
 
+#including FunRao, Sinpson and FunRedundancy from syncsa
+#load syncsa
+syncsa <- read_csv("input/syncsa_result.csv")
+
+#merging syncsa result with si_sample_means
+si_sample_means <- merge(
+  x = si_sample_means,
+  y = syncsa,
+  by = "samples",
+  all.x = TRUE
+)
+
 #puting the richness in the si_sample_means df
 si_sample_means <- cbind(si_sample_means, richness = rich_persample)
-
-#puting the diversity in the si_sample_means df
-si_sample_means <- cbind(si_sample_means, diversity = div_persample)
 
 #removing rownames
 rownames(si_sample_means) <- NULL

@@ -38,7 +38,7 @@ si_ecosystem$ecosystem <- factor(si_ecosystem$ecosystem, levels = c("Plant host"
                                                                   "Animal host"))
 
 
-ecosystem_plot <- bar_plot(
+ecosystem_si_barplot <- bar_plot(
     data = si,
     x_var = "ecosystem",
     y_var = "mean_si",
@@ -48,13 +48,13 @@ ecosystem_plot <- bar_plot(
     error_var = "se_mean_si",
     fill_pallete = eco_colors
 )
-ecosystem_plot
+ecosystem_si_barplot
 
-ggsave("results/plots/ecosystem_plot.png", width = 15, height = 10, units = "in")
+ggsave("results/plots/ecosystem_si_barplot.png", width = 15, height = 10, units = "in")
 
 
 #life_style_plot
-life_style_plot <- bar_plot(
+life_style_si_barplot <- bar_plot(
     data = si,
     x_var = "life_style",
     y_var = "mean_si",
@@ -65,9 +65,9 @@ life_style_plot <- bar_plot(
     fill_pallete = pallete
 )
 
-life_style_plot
+life_style_si_barplot
 
-ggsave("results/plots/life_style_plot.png", width = 10, height = 15, units = "in")
+ggsave("results/plots/life_style_si_barplot.png", width = 10, height = 15, units = "in")
 
 #mean_si versus diversity regression plot
 si_diversity_plot <- ggplot(si, aes(x = mean_si, y = diversity)) +
@@ -101,7 +101,7 @@ ggsave("results/plots/mean-si_x_richness_plot.png", width = 10, height = 10, uni
 
 
 ### Tryinng boxplot instead of barplot for ecosystem and life_style plots
-eco_boxplot <- ggplot() +
+eco_si_boxplot <- ggplot() +
   geom_boxplot(
     data = si,
     aes(
@@ -135,11 +135,11 @@ eco_boxplot <- ggplot() +
     size = unit(15, "cm"),
     face = "bold")) +
   theme(legend.position = "none")
-eco_boxplot
+eco_si_boxplot
 
-ggsave("results/plots/ecosystem_boxplot.png", width = 10, height = 12, units = "in")
+ggsave("results/plots/ecosystem_si_boxplot.png", width = 10, height = 12, units = "in")
 
-lfst_boxplot <- ggplot() +
+lfst_si_boxplot <- ggplot() +
   geom_boxplot(
     data = si,
     aes(
@@ -173,9 +173,9 @@ lfst_boxplot <- ggplot() +
     size = unit(15, "cm"),
     face = "bold")) +
   theme(legend.position = "none")
-lfst_boxplot
+lfst_si_boxplot
 
-ggsave("results/plots/life-style_boxplot.png", width = 10, height = 12, units = "in")
+ggsave("results/plots/life-style_si_boxplot.png", width = 10, height = 12, units = "in")
 
 
 ###########################################################################################################################
