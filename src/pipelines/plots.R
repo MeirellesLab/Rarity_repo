@@ -176,3 +176,158 @@ lfst_boxplot <- ggplot() +
 lfst_boxplot
 
 ggsave("results/plots/life-style_boxplot.png", width = 10, height = 12, units = "in")
+
+
+###########################################################################################################################
+## Distinctiveness plots
+
+ecosystem_di_plot <- bar_plot(
+    data = di,
+    x_var = "ecosystem",
+    y_var = "mean_di",
+    fill_var = "ecosystem",
+    summarized_data = di_ecosystem,
+    average_var = "mean_mean_di",
+    error_var = "se_mean_di",
+    fill_pallete = eco_colors
+)
+ecosystem_plot
+
+ggsave("results/plots/ecosystem_distinctiveness_barplot.png", width = 15, height = 10, units = "in")
+
+
+#life_style_plot
+life_style_di_plot <- bar_plot(
+    data = di,
+    x_var = "life_style",
+    y_var = "mean_di",
+    fill_var = "life_style",
+    summarized_data = si_life_style,
+    average_var = "mean_mean_di",
+    error_var = "se_mean_di",
+    fill_pallete = pallete
+)
+
+life_style_plot
+
+ggsave("results/plots/life_style_distinctiveness_barplot.png", width = 10, height = 15, units = "in")
+
+#mean_di versus diversity regression plot
+di_diversity_plot <- ggplot(di, aes(x = mean_di, y = Simpson)) +
+  geom_point(aes(
+    color = life_style
+  )) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Mean Distinctiveness", y = "Diversity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
+  scale_color_manual(values = pallete)
+di_diversity_plot
+
+ggsave("results/plots/mean-di_x_diversity_plot.png", width = 10, height = 10, units = "in")
+
+#mean_di versus richness regression plot
+si_richness_plot <- ggplot(di, aes(x = mean_di, y = richness)) +
+  geom_point(
+    aes(
+      color = life_style
+    )
+  ) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Mean Distinctiveness", y = "Richness") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
+  scale_color_manual(values = pallete)
+di_richness_plot
+
+ggsave("results/plots/mean-di_x_richness_plot.png", width = 10, height = 10, units = "in")
+
+#mean_di versus Fnctional diversity (rao diversity)
+di_rao_plot <- ggplot(di, aes(x = mean_di, y = FunRao)) +
+  geom_point(
+    aes(
+      color = life_style
+    )
+  ) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Mean Distinctiveness", y = "Functional Diversity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
+  scale_color_manual(values = pallete)
+
+### Trying boxplot instead of barplot for ecosystem and life_style plots
+eco_di_boxplot <- ggplot() +
+  geom_boxplot(
+    data = di,
+    aes(
+      x = reorder(ecosystem, mean_di, median),
+      y = mean_di,
+      fill = ecosystem
+    ),
+    width = 0.5
+  ) +
+  theme_pubr() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_blank()) +
+  theme(axis.line = element_line()) +
+  #axist title and text
+  theme(
+    axis.text.y = element_text(size = unit(9, "cm")),
+    axis.text.x = element_text(
+      size = unit(12, "cm"),
+      angle = 45,
+      vjust = 0.6)) +
+  scale_fill_manual(values = eco_colors) +
+  labs(y = "Mean Distinctiveness", x = "Ecosystem") +
+  theme(
+    axis.title.x = element_text(
+    size = unit(15, "cm"),
+    face = "bold"),
+    axis.title.y = element_text(
+    size = unit(15, "cm"),
+    face = "bold")) +
+  theme(legend.position = "none")
+eco_di_boxplot
+
+ggsave("results/plots/ecosystem_di_boxplot.png", width = 10, height = 12, units = "in")
+
+lfst_di_boxplot <- ggplot() +
+  geom_boxplot(
+    data = di,
+    aes(
+      x = reorder(life_style, mean_di, median),
+      y = mean_di,
+      fill = life_style
+    ),
+    width = 0.5
+  ) +
+  theme_pubr() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_blank()) +
+  theme(axis.line = element_line()) +
+  #axist title and text
+  theme(
+    axis.text.y = element_text(size = unit(9, "cm")),
+    axis.text.x = element_text(
+      size = unit(12, "cm"),
+      angle = 45,
+      vjust = 0.6)) +
+  scale_fill_manual(values = pallete) +
+  labs(y = "Mean Distinctiveness", x = "Life Style") +
+  theme(
+    axis.title.x = element_text(
+    size = unit(15, "cm"),
+    face = "bold"),
+    axis.title.y = element_text(
+    size = unit(15, "cm"),
+    face = "bold")) +
+  theme(legend.position = "none")
+lfst_di_boxplot
+
+ggsave("results/plots/life-style_di_boxplot.png", width = 10, height = 12, units = "in")
