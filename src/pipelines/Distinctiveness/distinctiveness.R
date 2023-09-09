@@ -41,12 +41,17 @@ traits <- as.matrix(traits)
 #Generating distance matrix with traits
 dist_traits <-compute_dist_matrix(traits, metric = "euclidean", type = "numeric")
 
+#scaling the distances between 0 and 1
+min_dist <- min(dist_traits)
+max_dist <- max(dist_traits)
+
+dist_traits <- (dist_traits - min_dist)/(max_dist - min_dist)
+
 #calculating functional diversity per samples
 
 
-
 # Calculate distinctiveness  
-di_df <- distinctiveness(taxon, traits)
+di_df <- distinctiveness(taxon, dist_traits)
 
 di_df_stack <- matrix_to_stack(di_df,
                                 value_col = "di",
