@@ -7,7 +7,7 @@
 set.seed(123)
 
 # load si_means_persample table
-si <- read_csv("input/scarcity_means_persample_29_08_2023.csv")
+si <- read_csv("input/scarcity_means_persample_08_09_2023.csv")
 
 si$life_style <- as.factor(si$life_style)
 ## There is something very strange with this function. But it was the only way

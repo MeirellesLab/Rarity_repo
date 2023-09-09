@@ -10,7 +10,7 @@ packages <- c(
   "cowplot",
   "vegan",
   "devtools",
-  "FD"
+  "SYNCSA"
 )
 
 

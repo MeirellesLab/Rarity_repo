@@ -5,15 +5,6 @@
 #                                                                                      #
 ########################################################################################
 
-# Load packages
-library(tidyverse)
-library(funrar)
-library(Matrix)
-library(vegan)
-library(FD)
-
-source("src/data_wrangling/merge_annotation_metadata/merge_annotation_metadata.R")
-
 # Load data
 taxon <- read_csv("input/kraken_biomedb_relative_genera.csv")
 
@@ -55,7 +46,6 @@ max_dist <- max(dist_traits)
 
 dist_traits <- (dist_traits - min_dist)/(max_dist - min_dist)
 
-
 # Calculate distinctiveness  
 di_df <- distinctiveness(taxon, dist_traits)
 
@@ -67,6 +57,15 @@ di_df_stack <- matrix_to_stack(di_df,
 di_sample_means <- di_df_stack %>%
   group_by(samples) %>%
   summarise(mean_di = mean(di, na.rm = TRUE))
+
+rm(list = setdiff(
+  ls(),
+  c("si_sample_means",
+    "di_sample_means",
+    "metadata",
+    "richness",
+    "di_df")
+))
 
 #including FunRao, Sinpson and FunRedundancy from syncsa
 #loading syncsa result
@@ -83,6 +82,7 @@ di_sample_means <- merge(
 di_sample_means$...1 <- NULL
 
 #adding metadata to di_sample_means
+source("src/data_wrangling/merge_annotation_metadata/merge_annotation_metadata.R")
 
 di_sample_means <- merge_annotation_metadata(
                   annotation_df = di_sample_means,
@@ -95,3 +95,11 @@ di_sample_means <- cbind(di_sample_means, richness = richness)
 
 #write the di_sample_means table
 write_csv(di_sample_means, "input/distinctiveness_means_persample_08_09_2023.csv")
+
+#write the di_df table
+write_csv(di_df, "input/distinctiveness_stack_df_08_09_2023.csv")
+
+rm(list = setdiff(
+  ls(),
+  c()
+))

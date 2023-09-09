@@ -26,16 +26,17 @@ eco_colors <- c(
   "Soil" = "#8B4513"
 )
 
+set.seed(123)
 #order ecosystem factor in ascending order 
-si_ecosystem$ecosystem <- factor(si_ecosystem$ecosystem, levels = c("Plant host",
-                                                                  "Wastewater",
+si_ecosystem$ecosystem <- factor(si_ecosystem$ecosystem, levels = c("Sediment",
+                                                                  "Freshwater",
                                                                   "Soil",
-                                                                  "Sediment", 
-                                                                  "Freshwater", 
+                                                                  "Wastewater",
+                                                                  "Plant host",                                                                   
                                                                   "Groundwater",
                                                                   "Saline Water",
-                                                                  "Human host",
-                                                                  "Animal host"))
+                                                                  "Animal host",
+                                                                  "Human host"))
 
 
 ecosystem_si_barplot <- bar_plot(
@@ -70,15 +71,11 @@ life_style_si_barplot
 ggsave("results/plots/life_style_si_barplot.png", width = 10, height = 15, units = "in")
 
 #mean_si versus diversity regression plot
-si_diversity_plot <- ggplot(si, aes(x = mean_si, y = diversity)) +
-  geom_point(aes(
-    color = life_style
-  )) +
-  geom_smooth(method = "lm", se = FALSE) +
+si_diversity_plot <- ggplot(si, aes(x = mean_si, y = Simpson)) +
+  geom_point(aes()) +
   labs(x = "Mean Scarcity", y = "Diversity") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
-  scale_color_manual(values = pallete)
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
 si_diversity_plot
 
 ggsave("results/plots/mean-si_x_diversity_plot.png", width = 10, height = 10, units = "in")
@@ -86,15 +83,11 @@ ggsave("results/plots/mean-si_x_diversity_plot.png", width = 10, height = 10, un
 #mean_si versus richness regression plot
 si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
   geom_point(
-    aes(
-      color = life_style
-    )
+    aes()
   ) +
-  geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Mean Scarcity", y = "Richness") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
-  scale_color_manual(values = pallete)
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) 
 si_richness_plot
 
 ggsave("results/plots/mean-si_x_richness_plot.png", width = 10, height = 10, units = "in")
@@ -181,6 +174,16 @@ ggsave("results/plots/life-style_si_boxplot.png", width = 10, height = 12, units
 ###########################################################################################################################
 ## Distinctiveness plots
 
+di_ecosystem$ecosystem <- factor(di_ecosystem$ecosystem, levels = c("Sediment",
+                                                                  "Freshwater",
+                                                                  "Soil",
+                                                                  "Wastewater",
+                                                                  "Plant host",                                                                   
+                                                                  "Groundwater",
+                                                                  "Saline Water",
+                                                                  "Animal host",
+                                                                  "Human host"))
+
 ecosystem_di_plot <- bar_plot(
     data = di,
     x_var = "ecosystem",
@@ -191,7 +194,7 @@ ecosystem_di_plot <- bar_plot(
     error_var = "se_mean_di",
     fill_pallete = eco_colors
 )
-ecosystem_plot
+ecosystem_di_plot
 
 ggsave("results/plots/ecosystem_distinctiveness_barplot.png", width = 15, height = 10, units = "in")
 
@@ -202,42 +205,34 @@ life_style_di_plot <- bar_plot(
     x_var = "life_style",
     y_var = "mean_di",
     fill_var = "life_style",
-    summarized_data = si_life_style,
+    summarized_data = di_life_style,
     average_var = "mean_mean_di",
     error_var = "se_mean_di",
     fill_pallete = pallete
 )
 
-life_style_plot
+life_style_di_plot
 
 ggsave("results/plots/life_style_distinctiveness_barplot.png", width = 10, height = 15, units = "in")
 
 #mean_di versus diversity regression plot
 di_diversity_plot <- ggplot(di, aes(x = mean_di, y = Simpson)) +
-  geom_point(aes(
-    color = life_style
-  )) +
-  geom_smooth(method = "lm", se = FALSE) +
+  geom_point(aes()) +
   labs(x = "Mean Distinctiveness", y = "Diversity") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
-  scale_color_manual(values = pallete)
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
 di_diversity_plot
 
 ggsave("results/plots/mean-di_x_diversity_plot.png", width = 10, height = 10, units = "in")
 
 #mean_di versus richness regression plot
-si_richness_plot <- ggplot(di, aes(x = mean_di, y = richness)) +
+di_richness_plot <- ggplot(di, aes(x = mean_di, y = richness)) +
   geom_point(
-    aes(
-      color = life_style
-    )
+    aes()
   ) +
-  geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Mean Distinctiveness", y = "Richness") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
-  scale_color_manual(values = pallete)
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
 di_richness_plot
 
 ggsave("results/plots/mean-di_x_richness_plot.png", width = 10, height = 10, units = "in")
@@ -245,22 +240,33 @@ ggsave("results/plots/mean-di_x_richness_plot.png", width = 10, height = 10, uni
 #mean_di versus Fnctional diversity (rao diversity)
 di_rao_plot <- ggplot(di, aes(x = mean_di, y = FunRao)) +
   geom_point(
-    aes(
-      color = life_style
-    )
+    aes()
   ) +
-  geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Mean Distinctiveness", y = "Functional Diversity") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1)) +
-  scale_color_manual(values = pallete)
+  theme(axis.text.x = element_text(angle = axis_text_angle, hjust = 1))
+di_rao_plot
+
+ggsave("results/plots/mean-di_x_rao_plot.png", width = 10, height = 10, units = "in")
 
 ### Trying boxplot instead of barplot for ecosystem and life_style plots
+di$ecosystem <- factor(di$ecosystem, levels = c("Sediment",
+                                                                  "Freshwater",
+                                                                  "Soil",
+                                                                  "Wastewater",
+                                                                  "Plant host", 
+                                                                  "Saline Water",
+                                                                   "Groundwater",
+                                                                  "Animal host",
+                                                                  "Human host"))
+
+
+
 eco_di_boxplot <- ggplot() +
   geom_boxplot(
     data = di,
     aes(
-      x = reorder(ecosystem, mean_di, median),
+      x = ecosystem,
       y = mean_di,
       fill = ecosystem
     ),
@@ -298,7 +304,7 @@ lfst_di_boxplot <- ggplot() +
   geom_boxplot(
     data = di,
     aes(
-      x = reorder(life_style, mean_di, median),
+      x = life_style,
       y = mean_di,
       fill = life_style
     ),
@@ -331,3 +337,41 @@ lfst_di_boxplot <- ggplot() +
 lfst_di_boxplot
 
 ggsave("results/plots/life-style_di_boxplot.png", width = 10, height = 12, units = "in")
+
+
+######## Arranging plots ###################
+
+#Si plots
+si_boxplots <- ggarrange(
+  eco_si_boxplot,
+  lfst_si_boxplot,
+  labels = c("A", "B"),
+  ncol = 2,
+  nrow = 1
+)
+si_boxplots
+
+ggsave("results/plots/si_boxplots.png", width = 20, height = 12, units = "in")
+
+#Di plots
+di_boxplots <- ggarrange(
+  eco_di_boxplot,
+  lfst_di_boxplot,
+  labels = c("C", "D"),
+  ncol = 2,
+  nrow = 1
+)
+di_boxplots
+
+ggsave("results/plots/di_boxplots.png", width = 20, height = 12, units = "in")
+
+#Si and Di plots (Panel 1)
+si_di_boxplots <- ggarrange(
+  si_boxplots,
+  di_boxplots,
+  ncol = 1,
+  nrow = 2
+)
+si_di_boxplots
+
+ggsave("results/plots/si_di_boxplots_panel.png", width = 20, height = 18, units = "in")

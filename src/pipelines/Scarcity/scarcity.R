@@ -5,12 +5,6 @@
 #                                                                                      #
 ########################################################################################
 
-# Load packages
-library(tidyverse)
-library(funrar)
-library(Matrix)
-library(vegan)
-
 source("src/data_wrangling/merge_annotation_metadata/merge_annotation_metadata.R")
 
 # Load data
@@ -18,9 +12,9 @@ df <- read_csv("input/kraken_biomedb_relative_genera.csv")
 
 # Temporary: remove samples not present in atualized metadata
 meta <- read_csv("input/biome_classification.csv")
-str(meta)
+
 df <- df %>% filter(df$samples %in% meta$samples)
-nrow(df)
+
 
 #merging metadata and taxonomy df
 df <- merge_annotation_metadata(
@@ -77,9 +71,6 @@ sum(is.na(df_matrix))
 sum(df_matrix == 0)
 dim(df_matrix)
 
-df_filling <- 1 - sum(df_matrix == 0) / (ncol(df_matrix) * nrow(df_matrix))
-
-df_filling
 
 ## Our matrix was created. Let's clear the global environment to free up memory.
 rm(list = setdiff(
@@ -133,6 +124,9 @@ si_sample_means <- cbind(si_sample_means, richness = rich_persample)
 #removing rownames
 rownames(si_sample_means) <- NULL
 
+#removing column ...1
+si_sample_means$...1 <- NULL
+
 #adding habitat, ecosystem and life_style to the si_sample_means df
 si_sample_means <- merge(
   x = si_sample_means,
@@ -142,15 +136,18 @@ si_sample_means <- merge(
 )
 
 #reorder columns to be samples, then life_style, then ecosystem, then habitat, then mean_si, then richness, then diversity
-si_sample_means <- si_sample_means[, c(1, 5, 6, 7, 2, 3, 4)]
+si_sample_means <- si_sample_means[, c(1, 7, 8, 9, 2, 3, 4, 5, 6)]
 
-View(si_sample_means)
 #saving the df
-write_csv(si_sample_means, "input/scarcity_means_persample_29_08_2023.csv")
+write_csv(si_sample_means, "input/scarcity_means_persample_08_09_2023.csv")
 
 #saving the stack df
 write_csv(si_stack, "input/scarcity_stack_df_29_08_2023.csv")
 
+rm(list = setdiff(
+  ls(),
+  c("si_sample_means")
+))
 
 ########################################################################################
 #Here is the part of the script for calculating scarcity withot using the stack matrix##
