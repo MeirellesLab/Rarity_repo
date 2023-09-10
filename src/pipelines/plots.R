@@ -97,10 +97,16 @@ si_diversity_plot <- ggplot(si, aes(x = mean_si, y = Simpson)) +
     axis.title.y = element_text(
     size = unit(25, "cm"),
     face = "bold")) +
+  #theming the legend
+  theme(legend.position = "right",
+    legend.text = element_text(size = unit(15, "cm")),
+    legend.title = element_text(size = unit(20, "cm"), face = "bold"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.spacing.y = unit(0.3, "cm")) +
   xlim(0, 1) + ylim(0, 1)
 si_diversity_plot
 
-ggsave("results/plots/mean-si_x_diversity_plot_ecocolors.png", width = 10, height = 10, units = "in")
+ggsave("results/plots/mean-si_x_diversity_plot_ecocolors.png", width = 30, height = 20, units = "cm")
 
 #mean_si versus richness regression plot
 si_richness_plot <- ggplot(si, aes(x = mean_si, y = richness)) +
@@ -507,6 +513,7 @@ ggsave("results/plots/mean-si_x_mean-di_plot.png", width = 10, height = 10, unit
 
 #ARRANGING CORRELATION PLOTS
 eco_legend <- get_legend(si_diversity_plot)
+
 correlations <- ggarrange(
   si_diversity_plot + theme(legend.position = "none"),
   di_diversity_plot + theme(legend.position = "none"),
@@ -517,11 +524,11 @@ correlations <- ggarrange(
   widths = c(1, 1),
   align = "h", 
   legend.grob = eco_legend,
-  legend = "bottom"
+  legend = "right"
 )
 correlations
 
-ggsave("results/plots/correlations.png", width = 40, height = 20, units = "cm")
+ggsave("results/plots/correlations.png", width = 45, height = 20, units = "cm")
 
 
 #Now, taking latitude and samples from metadata
@@ -615,7 +622,7 @@ lat_plots <- ggarrange(
   widths = c(1, 1),
   align = "h", 
   legend.grob = eco_legend,
-  legend = "bottom"
+  legend = "right"
 )
 lat_plots
 
