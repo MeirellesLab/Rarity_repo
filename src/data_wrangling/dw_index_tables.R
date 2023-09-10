@@ -13,32 +13,32 @@ si$life_style <- as.factor(si$life_style)
 ## There is something very strange with this function. But it was the only way
 ## I found to reorder the DF based in the life style, ecosystem, then the mean,
 ## nested in this order.
-si <- si %>%
+#si <- si %>%
 
-  group_by(life_style) %>%
-  mutate(life_style = fct_relevel(life_style, "host-associated", "free-living")) %>%
-  ungroup() %>%
+#  group_by(life_style) %>%
+#  mutate(life_style = fct_relevel(life_style, "host-associated", "free-living")) %>%
+#  ungroup() %>%
 
-  group_by(ecosystem) %>%
-  mutate(mean = mean(mean_si)) %>%
-  ungroup() %>%
-  mutate(ecosystem = fct_reorder(ecosystem, mean)) %>%
+# group_by(ecosystem) %>%
+#  mutate(mean = mean(mean_si)) %>%
+#  ungroup() %>%
+#  mutate(ecosystem = fct_reorder(ecosystem, mean)) %>%
 
 #   group_by(life_style) %>%
 #   mutate(ecosystem = fct_reorder(ecosystem, mean)) %>%
 #   select(-mean) %>%
 #   ungroup() %>%
 
-  group_by(ecosystem, habitat) %>%
-  mutate(mean = mean(mean_si)) %>%
-  ungroup() %>%
+#  group_by(ecosystem, habitat) %>%
+#  mutate(mean = mean(mean_si)) %>%
+#   ungroup() %>%
 
-  group_by(ecosystem) %>%
-  mutate(habitat = fct_reorder(habitat, mean)) %>%
-  select(-mean)
+#  group_by(ecosystem) %>%
+#  mutate(habitat = fct_reorder(habitat, mean)) %>%
+#  select(-mean)
 
-si$life_style <- as.factor(si$life_style)
-si$habitat <- as.factor(si$habitat)
+#si$life_style <- as.factor(si$life_style)
+#si$habitat <- as.factor(si$habitat)
 
 si <- si %>% 
       mutate(
