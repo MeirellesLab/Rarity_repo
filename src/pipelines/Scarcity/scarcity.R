@@ -11,7 +11,7 @@ source("src/data_wrangling/merge_annotation_metadata/merge_annotation_metadata.R
 df <- read_csv("input/kraken_biomedb_relative_genera.csv")
 
 # Temporary: remove samples not present in atualized metadata
-meta <- read_csv("input/biome_classification.csv")
+meta <- read_csv("input/final_metadata.csv")
 
 df <- df %>% filter(df$samples %in% meta$samples)
 
@@ -20,7 +20,7 @@ df <- df %>% filter(df$samples %in% meta$samples)
 df <- merge_annotation_metadata(
   annotation_df = df,
   metadata_df = meta,
-  metadata_variables = c("samples", "life_style", "ecosystem", "habitat")
+  metadata_variables = c("samples", "life_style", "ecosystem", "habitat", "antropization")
 )
 
 # Create the df with the samples names.
@@ -139,10 +139,10 @@ si_sample_means <- merge(
 si_sample_means <- si_sample_means[, c(1, 7, 8, 9, 2, 3, 4, 5, 6)]
 
 #saving the df
-write_csv(si_sample_means, "input/scarcity_means_persample_08_09_2023.csv")
+write_csv(si_sample_means, "input/scarcity_means_persample_test.csv")
 
 #saving the stack df
-write_csv(si_stack, "input/scarcity_stack_df_29_08_2023.csv")
+write_csv(si_stack, "input/scarcity_stack_df_test.csv")
 
 rm(list = setdiff(
   ls(),
